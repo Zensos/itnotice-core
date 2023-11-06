@@ -1,13 +1,12 @@
 from fastapi import APIRouter
 from ..dtos.member import CreateMemberDto
 from ..prisma import prisma
-import datetime
 
 router = APIRouter()
 
 @router.get('/')
 async def fetch_task():
-    # await prisma.task.create(data={'subject': 'ITF', 'description': 'ออปติมัสไปม์', 'category': 'Primary', 'date': datetime.datetime.now()})
+    # await p risma.task.create(data={'subject': 'ITF', 'description': 'ออปติมัสไปม์', 'category': 'Primary', 'date': datetime.datetime.now()})
     result = await prisma.task.find_many(order={'id':'asc'})
     return result
 
