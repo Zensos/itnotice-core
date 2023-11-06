@@ -1,0 +1,52 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DB_URL")
+}
+
+generator client {
+    provider  = "prisma-client-py"
+    interface = "asyncio"
+}
+
+model Member {
+    id        Int         @id @default(autoincrement())
+    username  String
+    email     String
+    password  String
+    balance   Float       @default(0.00)
+    role      MemberRoles @default(MEMBER)
+    createdAt DateTime    @default(now())
+}
+
+model Task {
+    id          Int      @id @default(autoincrement())
+    subject     Subject
+    description String
+    category    Category
+    star        Boolean  @default(false)
+    check       Boolean  @default(false)
+    read        Boolean  @default(false)
+    date        DateTime @default(now())
+}
+
+enum MemberRoles {
+    ADMIN
+    MEMBER
+}
+
+enum Subject {
+    PSCP
+    ITF
+    ICS
+    CHARM
+    MFIT
+    FE
+    OTHER
+}
+
+enum Category {
+    Primary
+    Assignment
+    News
+    Platform
+}
