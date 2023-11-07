@@ -39,9 +39,17 @@ async def update_member(id: int):
     }
 
 @router.put('/tasks/{id}/check')
-async def update_member(id: int, memberDto: CreateTaskDto):
+async def update_member(id: int):
     result = await prisma.task.find_first(where={'id': int(id)})
     await prisma.task.update(where={'id': result.id}, data={"check": not result.check})
+    return {
+        'message': 'Sucessfully Updated'
+    }
+
+@router.put('/tasks/{id}/read')
+async def update_member(id: int):
+    result = await prisma.task.find_first(where={'id': int(id)})
+    await prisma.task.update(where={'id': result.id}, data={"read": True})
     return {
         'message': 'Sucessfully Updated'
     }
