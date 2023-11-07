@@ -1,0 +1,63 @@
+from fastapi import APIRouter
+from ..dtos.tasks import CreateTaskDto
+from ..prisma import prisma
+
+router = APIRouter()
+
+
+@router.get('/tasks')
+async def fetch_task():
+    # await prisma.task.create(data={'subject': 'ITF', 'description': 'ออปติมัสไปม์', 'category': 'Primary', 'date': datetime.datetime.now()})
+    result = await prisma.task.find_many(order={'id':'asc'})
+    return result
+
+@router.get('/tasks/{category}')
+async def fetch_member(category: str):
+    result = await prisma.task.find_many(where={'subject': category})
+    if result:
+        return result
+    else:
+        return []
+
+@router.get('/tasks/{id}')
+async def fetch_member_id(id: int):
+    result = await prisma.member.find_first(where={'id': int(id)})
+    return result
+
+@router.post("/tasks")
+async def read_root(memberDto: CreateTaskDto):
+    await prisma.task.create(data={"subject": memberDto.subject, "description": memberDto.description, "category": memberDto.category})
+    return {
+        'message': 'Sucessfully Create Member'
+    }
+@router.put('/tasks/{id}/star')
+async def update_member(id: int):
+    result = await prisma.task.find_first(where={'id': int(id)})
+    await prisma.task.update(where={'id': result.id}, data={"star": not result.star})
+    return {
+        'message': 'Sucessfully Updated'
+    }
+
+@router.put('/tasks/{id}/check')
+async def update_member(id: int, memberDto: CreateTaskDto):
+    result = await prisma.task.find_first(where={'id': int(id)})
+    await prisma.task.update(where={'id': result.id}, data={"check": not result.check})
+    return {
+        'message': 'Sucessfully Updated'
+    }
+
+@router.put('/tasks/{id}')
+async def update_member(id: int, memberDto: CreateTaskDto):
+    await prisma.task.update(where={'id': int(id)}, data={"subject": memberDto.subject, "description": memberDto.description, "category": memberDto.category})
+    return {
+        'message': 'Sucessfully Updated'
+    }
+
+@router.delete("/tasks/{id}")
+async def delete_member(id):
+    print(id)
+    await prisma.task.delete(where={'id': int(id)})
+    return {
+        'message': 'Sucessfully Deleted'
+    }
+
