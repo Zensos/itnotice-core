@@ -28,14 +28,14 @@ async def fetch_member_id(id: int):
 async def read_root(memberDto: CreateTaskDto):
     await prisma.task.create(data={"subject": memberDto.subject, "description": memberDto.description, "category": memberDto.category})
     return {
-        'message': 'Sucessfully Create Member'
+        'message': 'สร้างข้อมูลสำเร็จ'
     }
 @router.put('/tasks/{id}/star')
 async def update_member(id: int):
     result = await prisma.task.find_first(where={'id': int(id)})
     await prisma.task.update(where={'id': result.id}, data={"star": not result.star})
     return {
-        'message': 'Sucessfully Updated'
+        'message': 'ติดดาวข้อมูลสำเร็จ'
     }
 
 @router.put('/tasks/{id}/check')
@@ -43,7 +43,7 @@ async def update_member(id: int):
     result = await prisma.task.find_first(where={'id': int(id)})
     await prisma.task.update(where={'id': result.id}, data={"check": not result.check})
     return {
-        'message': 'Sucessfully Updated'
+        'message': 'เช็คข้อมูลสำเร็จ'
     }
 
 @router.put('/tasks/{id}/read')
@@ -51,14 +51,14 @@ async def update_member(id: int):
     result = await prisma.task.find_first(where={'id': int(id)})
     await prisma.task.update(where={'id': result.id}, data={"read": True})
     return {
-        'message': 'Sucessfully Updated'
+        'message': 'อ่านข้อมูลสำเร็จ'
     }
 
 @router.put('/tasks/{id}')
 async def update_member(id: int, memberDto: CreateTaskDto):
     await prisma.task.update(where={'id': int(id)}, data={"subject": memberDto.subject, "description": memberDto.description, "category": memberDto.category})
     return {
-        'message': 'Sucessfully Updated'
+        'message': 'อัปเดตข้อมูลสำเร็จ'
     }
 
 @router.delete("/tasks/{id}")
@@ -66,6 +66,6 @@ async def delete_member(id):
     print(id)
     await prisma.task.delete(where={'id': int(id)})
     return {
-        'message': 'Sucessfully Deleted'
+        'message': 'ลบข้อมูลสำเร็จ'
     }
 
