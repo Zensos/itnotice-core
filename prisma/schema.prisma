@@ -41,7 +41,7 @@ enum Subject {
     CHARM
     MFIT
     FE
-    OTHER
+    OTHERS
 }
 
 enum Category {
