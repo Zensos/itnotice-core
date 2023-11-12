@@ -4,10 +4,8 @@ from ..prisma import prisma
 
 router = APIRouter()
 
-
 @router.get('/tasks')
 async def fetch_task():
-    # await prisma.task.create(data={'subject': 'ITF', 'description': 'ออปติมัสไปม์', 'category': 'Primary', 'date': datetime.datetime.now()})
     result = await prisma.task.find_many(order={'id':'asc'})
     return result
 
