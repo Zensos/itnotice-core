@@ -2,7 +2,7 @@
 
 Website : https://itnotice.vercel.app/
 
-กลุ่ม: Introvet-SEC1
+กลุ่ม Introvet-SEC1
 
 สมาชิก: 
 
